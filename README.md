@@ -15,7 +15,7 @@ Add to your `project.janet` file
 ```clojure
 (import moondown)
 
-(= "<h1>Title</h1>\n" (moondown/render "# Title")
+(= "<h1>Title</h1>\n" (moondown/render "# Title"))
 ```
 
 And that's it!

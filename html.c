@@ -26,6 +26,7 @@
 #include "houdini.h"
 
 #define USE_XHTML(opt) (opt->flags & HTML_USE_XHTML)
+#define UNUSED(x) (void)(x)
 
 int
 sdhtml_is_tag(const uint8_t *tag_data, size_t tag_size, const char *tagname)
@@ -118,6 +119,7 @@ rndr_autolink(struct buf *ob, const struct buf *link, enum mkd_autolink type, vo
 static void
 rndr_blockcode(struct buf *ob, const struct buf *text, const struct buf *lang, void *opaque)
 {
+	UNUSED(opaque);
 	if (ob->size) bufputc(ob, '\n');
 
 	if (lang && lang->size) {
@@ -154,6 +156,7 @@ rndr_blockcode(struct buf *ob, const struct buf *text, const struct buf *lang, v
 static void
 rndr_blockquote(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
 	if (ob->size) bufputc(ob, '\n');
 	BUFPUTSL(ob, "<blockquote>\n");
 	if (text) bufput(ob, text->data, text->size);
@@ -163,6 +166,7 @@ rndr_blockquote(struct buf *ob, const struct buf *text, void *opaque)
 static int
 rndr_codespan(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
 	BUFPUTSL(ob, "<code>");
 	if (text) escape_html(ob, text->data, text->size);
 	BUFPUTSL(ob, "</code>");
@@ -172,6 +176,7 @@ rndr_codespan(struct buf *ob, const struct buf *text, void *opaque)
 static int
 rndr_strikethrough(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
 	if (!text || !text->size)
 		return 0;
 
@@ -184,6 +189,8 @@ rndr_strikethrough(struct buf *ob, const struct buf *text, void *opaque)
 static int
 rndr_double_emphasis(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
+
 	if (!text || !text->size)
 		return 0;
 
@@ -197,6 +204,7 @@ rndr_double_emphasis(struct buf *ob, const struct buf *text, void *opaque)
 static int
 rndr_emphasis(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
 	if (!text || !text->size) return 0;
 	BUFPUTSL(ob, "<em>");
 	if (text) bufput(ob, text->data, text->size);
@@ -263,6 +271,7 @@ rndr_link(struct buf *ob, const struct buf *link, const struct buf *title, const
 static void
 rndr_list(struct buf *ob, const struct buf *text, int flags, void *opaque)
 {
+	UNUSED(opaque);
 	if (ob->size) bufputc(ob, '\n');
 	bufput(ob, flags & MKD_LIST_ORDERED ? "<ol>\n" : "<ul>\n", 5);
 	if (text) bufput(ob, text->data, text->size);
@@ -272,6 +281,8 @@ rndr_list(struct buf *ob, const struct buf *text, int flags, void *opaque)
 static void
 rndr_listitem(struct buf *ob, const struct buf *text, int flags, void *opaque)
 {
+	UNUSED(opaque);
+	UNUSED(flags);
 	BUFPUTSL(ob, "<li>");
 	if (text) {
 		size_t size = text->size;
@@ -329,6 +340,7 @@ rndr_paragraph(struct buf *ob, const struct buf *text, void *opaque)
 static void
 rndr_raw_block(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
 	size_t org, sz;
 	if (!text) return;
 	sz = text->size;
@@ -344,6 +356,7 @@ rndr_raw_block(struct buf *ob, const struct buf *text, void *opaque)
 static int
 rndr_triple_emphasis(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
 	if (!text || !text->size) return 0;
 	BUFPUTSL(ob, "<strong><em>");
 	bufput(ob, text->data, text->size);
@@ -414,6 +427,7 @@ rndr_raw_html(struct buf *ob, const struct buf *text, void *opaque)
 static void
 rndr_table(struct buf *ob, const struct buf *header, const struct buf *body, void *opaque)
 {
+	UNUSED(opaque);
 	if (ob->size) bufputc(ob, '\n');
 	BUFPUTSL(ob, "<table><thead>\n");
 	if (header)
@@ -427,6 +441,7 @@ rndr_table(struct buf *ob, const struct buf *header, const struct buf *body, voi
 static void
 rndr_tablerow(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
 	BUFPUTSL(ob, "<tr>\n");
 	if (text)
 		bufput(ob, text->data, text->size);
@@ -436,6 +451,7 @@ rndr_tablerow(struct buf *ob, const struct buf *text, void *opaque)
 static void
 rndr_tablecell(struct buf *ob, const struct buf *text, int flags, void *opaque)
 {
+	UNUSED(opaque);
 	if (flags & MKD_TABLE_HEADER) {
 		BUFPUTSL(ob, "<th");
 	} else {
@@ -472,6 +488,7 @@ rndr_tablecell(struct buf *ob, const struct buf *text, int flags, void *opaque)
 static int
 rndr_superscript(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
 	if (!text || !text->size) return 0;
 	BUFPUTSL(ob, "<sup>");
 	bufput(ob, text->data, text->size);
@@ -482,6 +499,7 @@ rndr_superscript(struct buf *ob, const struct buf *text, void *opaque)
 static void
 rndr_normal_text(struct buf *ob, const struct buf *text, void *opaque)
 {
+	UNUSED(opaque);
 	if (text)
 		escape_html(ob, text->data, text->size);
 }
@@ -523,6 +541,9 @@ toc_header(struct buf *ob, const struct buf *text, int level, void *opaque)
 static int
 toc_link(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *content, void *opaque)
 {
+	UNUSED(link);
+	UNUSED(title);
+	UNUSED(opaque);
 	if (content && content->size)
 		bufput(ob, content->data, content->size);
 	return 1;

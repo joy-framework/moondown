@@ -26,6 +26,8 @@
 #define strncasecmp	_strnicmp
 #endif
 
+#define UNUSED(x) (void)(x)
+
 int
 sd_autolink_issafe(const uint8_t *link, size_t link_len)
 {
@@ -51,6 +53,8 @@ sd_autolink_issafe(const uint8_t *link, size_t link_len)
 static size_t
 autolink_delim(uint8_t *data, size_t link_end, size_t max_rewind, size_t size)
 {
+	UNUSED(max_rewind);
+	UNUSED(size);
 	uint8_t cclose, copen = 0;
 	size_t i;
 
@@ -167,6 +171,7 @@ sd_autolink__www(
 	size_t size,
 	unsigned int flags)
 {
+	UNUSED(flags);
 	size_t link_end;
 
 	if (max_rewind > 0 && !ispunct(data[-1]) && !isspace(data[-1]))
@@ -203,6 +208,7 @@ sd_autolink__email(
 	size_t size,
 	unsigned int flags)
 {
+	UNUSED(flags);
 	size_t link_end, rewind;
 	int nb = 0, np = 0;
 

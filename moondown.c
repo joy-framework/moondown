@@ -24,7 +24,7 @@ static Janet c_render(int32_t argc, Janet *argv) {
 
   ob = bufnew(OUTPUT_UNIT);
 
-  sdhtml_renderer(&callbacks, &options, 0);
+  sdhtml_renderer(&callbacks, &options, (1 << 9));
   markdown = sd_markdown_new(0, 16, &callbacks, &options);
 
   sd_markdown_render(ob, str, str_len, markdown);

@@ -3,7 +3,7 @@
   :description "A janet markdown parsing library based on sundown"
   :author "Sean Walker"
   :license "MIT"
-  :dependencies [{:repo "https://github.com/joy-framework/tester" :tag "0.1.0"}]
+  :dependencies ["https://github.com/joy-framework/tester"]
   :url "https://github.com/joy-framework/moondown"
   :repo "git+https://github.com/joy-framework/moondown")
 

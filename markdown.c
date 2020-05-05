@@ -41,6 +41,8 @@
 #define GPERF_CASE_STRNCMP 1
 #include "html_blocks.h"
 
+#define UNUSED(x) (void)(x)
+
 /***************
  * LOCAL TYPES *
  ***************/
@@ -632,6 +634,7 @@ char_emphasis(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t of
 static size_t
 char_linebreak(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size)
 {
+	UNUSED(size);
 	if (offset < 2 || data[-1] != ' ' || data[-2] != ' ')
 		return 0;
 
@@ -647,6 +650,7 @@ char_linebreak(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t o
 static size_t
 char_codespan(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size)
 {
+	UNUSED(offset);
 	size_t end, nb = 0, i, f_begin, f_end;
 
 	/* counting the number of backticks in the delimiter */
@@ -690,6 +694,7 @@ char_codespan(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t of
 static size_t
 char_escape(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size)
 {
+	UNUSED(offset);
 	static const char *escape_chars = "\\`*_{}[]()#+-.!:|&<>^~";
 	struct buf work = { 0, 0, 0, 0 };
 
@@ -715,6 +720,7 @@ char_escape(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offs
 static size_t
 char_entity(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size)
 {
+	UNUSED(offset);
 	size_t end = 1;
 	struct buf work = { 0, 0, 0, 0 };
 
@@ -743,6 +749,7 @@ char_entity(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offs
 static size_t
 char_langle_tag(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size)
 {
+	UNUSED(offset);
 	enum mkd_autolink altype = MKDA_NOT_AUTOLINK;
 	size_t end = tag_length(data, size, &altype);
 	struct buf work = { data, end, 0, 0 };
@@ -1076,6 +1083,7 @@ cleanup:
 static size_t
 char_superscript(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size)
 {
+	UNUSED(offset);
 	size_t sup_start, sup_len;
 	struct buf *sup;
 
@@ -1830,6 +1838,7 @@ htmlblock_end_tag(
 	uint8_t *data,
 	size_t size)
 {
+	UNUSED(rndr);
 	size_t i, w;
 
 	/* checking if tag is a match */

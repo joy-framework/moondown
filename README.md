@@ -1,3 +1,9 @@
+*alert!*
+
+moondown has been archived!
+
+check out https://github.com/pyrmont/markable instead
+
 # moondown
 
 Render markdown as html with janet
